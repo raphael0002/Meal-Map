@@ -1,0 +1,18 @@
+const express = require('express');
+const recipeController = require('../controllers/recipeController');
+const authentication = require('../middlewares/authenticationMiddleware');
+
+const router = express.Router();
+
+router
+    .route('/')
+    .post(authentication, recipeController.createRecipe)
+    .delete(authentication, recipeController.deleteRecipe);
+
+router.get('/recipeByTitle/:title',authentication, recipeController.getRecipeByTitle);
+router.get('/recipeByCategory/:category',authentication, recipeController.getRecipeByCategory); 
+router.patch('/:title',authentication, recipeController.updateRecipe);
+router.patch('/commentsAndRatings/:title',authentication, recipeController.addCommentsAndRatings);
+
+
+module.exports = router;
