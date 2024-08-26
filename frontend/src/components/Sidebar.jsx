@@ -10,16 +10,17 @@ import {
 // import logo from "../assets/logo.png";
 import avatar from "../assets/avatar.png";
 import { createContext, useContext, useState } from "react";
+import DarkModeToggler from "./DarkModeToggler";
 
 const SidebarContext = createContext();
 
 const Sidebar = ({ children }) => {
   const [expanded, setExpanded] = useState(true);
-  const [threeDotFn, setThreeDotFn] = useState(false);
-  console.log(children);
+  const [threeDotFn, setThreeDotFn] = useState(true);
+
   return (
     <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm px-3">
+      <nav className="h-full flex flex-col bg-white dark:bg-gray-600 border-r shadow-sm px-3 transition-all duration-500">
         <div className="p-4 pb-2 flex justify-between items-center">
           <h1
             className={`overflow-hidden text-2xl font-bold font-poppins transition-all ${
@@ -42,7 +43,7 @@ const Sidebar = ({ children }) => {
             className={`absolute z-10 p-[10px] h-10 w-11 rounded-tl-lg rounded-bl-lg transition-all ${
               expanded
                 ? ""
-                : "relative rounded-lg hover:bg-indigo-200 hover:text-indigo-800"
+                : "relative rounded-lg hover:bg-indigo-200 hover:text-indigo-800 dark:text-white"
             }`}
           />
           <input
@@ -55,23 +56,25 @@ const Sidebar = ({ children }) => {
         </div>
 
         <SidebarContext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
+          <ul className="flex-1 px-3 ">{children}</ul>
         </SidebarContext.Provider>
-
-        <div className="border-t flex p-3 group">
+        <DarkModeToggler expanded={expanded} />
+        <div className="border-t flex p-3">
           <img src={avatar} className="w-10 h-10 rounded-md" />
           <div
             className={`flex justify-between items-center overflow-hidden transition-all  ${
               expanded ? "w-52 ml-3" : "w-0"
             } `}
           >
-            <div className="relative leading-4">
+            <div className="relative leading-4 dark:text-white">
               <h4 className="font-semibold">Rohan Shrestha</h4>
-              <span className="text-xs text-gray-600">rohan@gmail.com</span>
+              <span className="text-xs text-gray-600 dark:text-white">
+                rohan@gmail.com
+              </span>
             </div>
             <MoreVertical
               size={20}
-              className="h-9 hover:rounded-md hover:bg-gray-100 cursor-pointer"
+              className="h-9 hover:rounded-md hover:bg-gray-100 cursor-pointer dark:text-white"
               onClick={() => setThreeDotFn((curr) => !curr)}
             />
             {!threeDotFn && (
@@ -102,7 +105,7 @@ export function SidebarItem({ icon, text, active }) {
   const { expanded } = useContext(SidebarContext);
   return (
     <li
-      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+      className={`relative flex items-center py-2 px-3 my-1 font-medium dark:text-white rounded-md cursor-pointer transition-colors group ${
         active
           ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
           : "hover:bg-indigo-200 text-gray-600 hover:text-indigo-800"

@@ -12,7 +12,7 @@ const createUser = eah(async (req, res)=> {
         confirmPassword: confirmPassword
     });
 
-    generateToken(createUser, 200, res);
+    generateToken(createUser,"user", 200, res);
 })
 
 const loginUser = eah(async (req, res)=> {
@@ -22,13 +22,13 @@ const loginUser = eah(async (req, res)=> {
     }
 
     const user = await User.findOne({email}).select('+password');
-    const correct = await user.comparePassword(password, user.password);
+    const correct = await user.comparePassword(password.value, user.password);
 
     if(!user || !correct){
         throw new Error('Invalid email or password');
     }
 
-    generateToken(user, 200, res);
+    generateToken(user,"user", 200, res);
 });
 
 const deleteUser = eah(async(req, res) => {

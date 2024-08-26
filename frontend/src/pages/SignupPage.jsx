@@ -1,6 +1,8 @@
 import COVER_IMAGE from "../assets/coverImage.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../context/authContext";
 
 const SignupPage = () => {
   const [password, setPassword] = useState("");
@@ -8,7 +10,7 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
-
+  const { makeValue } = useAuth();
   const navigate = useNavigate();
 
   const getIsFormValid = () => {
@@ -19,10 +21,41 @@ const SignupPage = () => {
     );
   };
 
-  const handleSublit = (e) => {
+  const handleSublit = async (e) => {
     e.preventDefault();
     if (getIsFormValid()) {
-      navigate("/home");
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/api/${role === "user" ? "user" : "cook"}`,
+          {
+            username: username,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const data = response.data;
+        if (data.success) {
+          console.log(data);
+          makeValue({
+            username: username,
+            email: data.data.email,
+            role: data.data.role,
+            token: data.data.token,
+          });
+          navigate("/");
+        } else {
+          console.log(data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       alert(
         "Please fill out all required fields and ensure your email is valid."

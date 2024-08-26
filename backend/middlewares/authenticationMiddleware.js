@@ -12,13 +12,13 @@ const authenticationMiddleware = async (req, res, next) => {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             currentUser = await User.findById(decoded.id);
             if(currentUser){
-                req.user = {id: currentUser._id, role:"user"}
+                req.user = {id: currentUser.id, role:"user"}
                 return next();
             };
 
             currentCook = await Cook.findById(decoded.id);
             if(currentCook){
-                req.user = {id: currentCook._id, role:"cook"}
+                req.user = {id: currentCook.id, role:"cook"}
                 return next();
             } 
             

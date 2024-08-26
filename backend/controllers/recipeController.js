@@ -11,7 +11,7 @@ exports.getRecipes = eah( async (req, res) => {
     if(!recipes){
         return res.status(404).json({
             message: 'Recipes not found'})
-    }
+    }   
 
     res.status(200).json({
         status: 'success',

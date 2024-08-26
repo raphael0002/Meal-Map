@@ -1,5 +1,5 @@
 // import NavBar from "../components/NavBar";
-import Recipes from "../components/Recipes";
+// import Recipes from "../components/Recipes";
 import {
   Calendar,
   DiamondPlus,
@@ -9,6 +9,8 @@ import {
   BookMarked,
 } from "lucide-react";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
+// import CreateRecipesPage from "./CreateRecipesPage";
+import { Outlet } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -25,7 +27,7 @@ const HomePage = () => {
           <SidebarItem icon={<Settings size={20} />} text="Settings" />
         </Sidebar>
       </div>
-      <Recipes />
+      <Outlet />
     </div>
   );
 };

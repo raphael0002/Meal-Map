@@ -2,6 +2,8 @@ import COVER_IMAGE from "../assets/coverImage.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { validateEmail } from "../utils/validateEmail";
+import axios from "axios";
+import { useAuth } from "../context/authContext";
 
 const PasswordErrorMessage = () => {
   return (
@@ -17,7 +19,8 @@ const LoginPage = () => {
     isTouched: false,
   });
   const [email, setEmail] = useState("");
-
+  const [role, setRole] = useState("");
+  const { makeValue } = useAuth();
   const navigate = useNavigate();
   const rememberField = useRef();
 
@@ -25,10 +28,40 @@ const LoginPage = () => {
     return validateEmail(email) && password.value.length >= 8;
   };
 
-  const handleSublit = (e) => {
+  const handleSublit = async (e) => {
     e.preventDefault();
     if (getIsFormValid()) {
-      navigate("/home");
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/api/${
+            role === "user" ? "user" : "cook"
+          }/login`,
+          {
+            email: email,
+            password: password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const data = response.data;
+        if (data.success) {
+          console.log(data);
+          makeValue({
+            email: data.data.user.email,
+            role: data.data.role,
+            token: data.token,
+          });
+          navigate("/");
+        } else {
+          console.log(data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       alert(
         "Please fill out all required fields and ensure your email is valid."
@@ -81,6 +114,17 @@ const LoginPage = () => {
                 {password.isTouched && password.value.length < 8 && (
                   <PasswordErrorMessage />
                 )}
+              </div>
+              <div className="w-full my-3">
+                <select
+                  value={role}
+                  className="block py-2.5 w-full text-gray-500 bg-transparent border-b-2 border-black dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <option value="role">Choose a role</option>
+                  <option value="cook">Cook</option>
+                  <option value="user">User</option>
+                </select>
               </div>
               <div className="w-full flex items-center justify-center py-5">
                 <div className="w-full flex items-center">

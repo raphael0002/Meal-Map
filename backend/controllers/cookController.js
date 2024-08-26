@@ -12,7 +12,7 @@ const createCook = eah(async (req, res)=> {
         confirmPassword: confirmPassword
     });
 
-    generateToken(createCook, 200, res);
+    generateToken(createCook,"cook", 200, res);
 })
 
 const loginCook = eah(async (req, res)=> {
@@ -22,13 +22,12 @@ const loginCook = eah(async (req, res)=> {
     }
 
     const cook = await Cook.findOne({email}).select('+password');
-    const correct = await cook.comparePassword(password, cook.password);
+    const correct = await cook.comparePassword(password.value, cook.password);
 
     if(!cook || !correct){
         throw new Error('Invalid email or password');
     }
-
-    generateToken(cook, 200, res);
+    generateToken(cook, "cook", 200, res);
 });
 
 const deleteCook = eah(async(req, res) => {
