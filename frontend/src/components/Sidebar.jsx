@@ -10,17 +10,17 @@ import {
 // import logo from "../assets/logo.png";
 import avatar from "../assets/avatar.png";
 import { createContext, useContext, useState } from "react";
-import DarkModeToggler from "./DarkModeToggler";
+// import DarkModeToggler from "./DarkModeToggler";
+import { Link } from "react-router-dom";
 
 const SidebarContext = createContext();
 
-const Sidebar = ({ children }) => {
-  const [expanded, setExpanded] = useState(true);
+const Sidebar = ({ expanded, setExpanded, children }) => {
   const [threeDotFn, setThreeDotFn] = useState(true);
 
   return (
     <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white dark:bg-gray-600 border-r shadow-sm px-3 transition-all duration-500">
+      <nav className="h-full flex flex-col bg-[#CD5C08] dark:bg-gray-600 border-r shadow-sm px-3 transition-all duration-500">
         <div className="p-4 pb-2 flex justify-between items-center">
           <h1
             className={`overflow-hidden text-2xl font-bold font-poppins transition-all ${
@@ -32,7 +32,7 @@ const Sidebar = ({ children }) => {
           </h1>
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+            className="p-1.5 rounded-lg bg-[#6A9C89] hover:bg-[#C1D8C3]"
           >
             {expanded ? <X /> : <AlignJustify />}
           </button>
@@ -49,7 +49,7 @@ const Sidebar = ({ children }) => {
           <input
             type="text"
             placeholder="Search for recipes..."
-            className={`relative w-full p-2 pl-11 rounded-lg border border-gray-200 bg-gray-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${
+            className={`relative w-full p-2 pl-11 rounded-lg bg-[#C1D8C3] focus:bg-[#C1D8C3] focus:outline-none focus:ring-2 focus:ring-[#6A9C89] focus:border-transparent ${
               expanded ? "w-52" : "w-0 hidden"
             }`}
           />
@@ -58,8 +58,8 @@ const Sidebar = ({ children }) => {
         <SidebarContext.Provider value={{ expanded }}>
           <ul className="flex-1 px-3 ">{children}</ul>
         </SidebarContext.Provider>
-        <DarkModeToggler expanded={expanded} />
-        <div className="border-t flex p-3">
+        {/* <DarkModeToggler expanded={expanded} /> */}
+        <div className="border-t flex p-3 text-[#FFF5E4]">
           <img src={avatar} className="w-10 h-10 rounded-md" />
           <div
             className={`flex justify-between items-center overflow-hidden transition-all  ${
@@ -68,13 +68,13 @@ const Sidebar = ({ children }) => {
           >
             <div className="relative leading-4 dark:text-white">
               <h4 className="font-semibold">Rohan Shrestha</h4>
-              <span className="text-xs text-gray-600 dark:text-white">
+              <span className="text-xs text-black font-semibold dark:text-white">
                 rohan@gmail.com
               </span>
             </div>
             <MoreVertical
               size={20}
-              className="h-9 hover:rounded-md hover:bg-gray-100 cursor-pointer dark:text-white"
+              className="h-9 hover:rounded-md hover:bg-[#C1D8C3] hover:text-gray-600 cursor-pointer dark:text-white"
               onClick={() => setThreeDotFn((curr) => !curr)}
             />
             {!threeDotFn && (
@@ -101,32 +101,35 @@ const Sidebar = ({ children }) => {
     </aside>
   );
 };
-export function SidebarItem({ icon, text, active }) {
+export function SidebarItem({ icon, text, active, linkTo }) {
   const { expanded } = useContext(SidebarContext);
   return (
-    <li
-      className={`relative flex items-center py-2 px-3 my-1 font-medium dark:text-white rounded-md cursor-pointer transition-colors group ${
-        active
-          ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-          : "hover:bg-indigo-200 text-gray-600 hover:text-indigo-800"
-      }`}
-    >
-      {icon}
-      <span
-        className={`overflow-hidden transition-all ${
-          expanded ? "w-52 ml-3" : "w-0 hidden"
+    <li>
+      <Link
+        to={linkTo}
+        className={`relative flex items-center py-2 px-3 my-1 font-medium text-[#FFF5E4] dark:text-white rounded-md cursor-pointer group ${
+          active
+            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
+            : "hover:bg-[#FFF5E4] hover:text-gray-600"
         }`}
       >
-        {text}
-      </span>
-
-      {!expanded && (
-        <div
-          className={`absolute whitespace-nowrap left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+        {icon}
+        <span
+          className={`overflow-hidden transition-all ${
+            expanded ? "w-52 ml-3" : "w-0 hidden"
+          }`}
         >
           {text}
-        </div>
-      )}
+        </span>
+
+        {!expanded && (
+          <div
+            className={`absolute whitespace-nowrap left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+          >
+            {text}
+          </div>
+        )}
+      </Link>
     </li>
   );
 }

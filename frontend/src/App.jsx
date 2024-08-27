@@ -5,6 +5,10 @@ import Home from "./pages/HomePage";
 import CreateRecipesPage from "./pages/CreateRecipesPage";
 import BrowseRecipes from "./pages/BrowseRecipes";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import MealPlannerPage from "./pages/MealPlannerPage";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
+import MyRecipesPage from "./pages/MyRecipesPage";
+import RecipeOverview from "./pages/RecipeOverview";
 
 const App = () => {
   return (
@@ -12,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
+
         <Route
           path="/"
           element={
@@ -20,8 +25,12 @@ const App = () => {
             </ProtectedRoutes>
           }
         >
+          <Route path="/Overview" element={<RecipeOverview />} />
           <Route path="/CreateRecipe" element={<CreateRecipesPage />} />
           <Route path="/BrowseRecipes" element={<BrowseRecipes />} />
+          <Route path="/Meal-Planner" element={<MealPlannerPage />} />
+          <Route path="/Shopping-Cart" element={<ShoppingCartPage />} />
+          <Route path="/My-Recipes" element={<MyRecipesPage />} />
         </Route>
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
