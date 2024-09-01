@@ -55,7 +55,7 @@ const LoginPage = () => {
             role: data.data.role,
             token: data.token,
           });
-          navigate("/");
+          navigate("/BrowseRecipes");
         } else {
           console.log(data);
         }

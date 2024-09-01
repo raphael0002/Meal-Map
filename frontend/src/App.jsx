@@ -9,6 +9,7 @@ import MealPlannerPage from "./pages/MealPlannerPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage";
 import MyRecipesPage from "./pages/MyRecipesPage";
 import RecipeOverview from "./pages/RecipeOverview";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   return (
@@ -25,12 +26,20 @@ const App = () => {
             </ProtectedRoutes>
           }
         >
-          <Route path="/Overview" element={<RecipeOverview />} />
+          <Route
+            path="/Overview/:recipeId/:recipeName"
+            element={
+              <ProtectedRoutes>
+                <RecipeOverview />
+              </ProtectedRoutes>
+            }
+          />
           <Route path="/CreateRecipe" element={<CreateRecipesPage />} />
           <Route path="/BrowseRecipes" element={<BrowseRecipes />} />
           <Route path="/Meal-Planner" element={<MealPlannerPage />} />
           <Route path="/Shopping-Cart" element={<ShoppingCartPage />} />
           <Route path="/My-Recipes" element={<MyRecipesPage />} />
+          <Route path="/Profile" element={<ProfilePage />} />
         </Route>
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>

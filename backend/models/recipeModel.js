@@ -30,9 +30,28 @@ const RecipeSchema = new Schema({
         required: [true, "A recipe instruction must be provided"]
       }
     }],
+    calories: {
+      type: String,
+      required: [true, "A recipe calories must be provided"],
+      default: "0"
+    },
+    prepTime: {
+      type: String,
+      required: [true, "A recipe calories must be provided"],
+      default: "0"
+    },
+    servable: {
+      type: String,
+      required: [true, "A recipe calories must be provided"],
+      default: "0"
+    },
     category:[{
       type:String,
     }],
+    image:{
+      type: String,
+      required: [true, "A recipe image must be provided"]
+    },
     cook: {
       type: Schema.Types.ObjectId,
       ref: 'Cook',

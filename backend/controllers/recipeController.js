@@ -60,16 +60,19 @@ exports.getRecipeByCategory = eah(async (req, res) => {
 
 exports.createRecipe = eah(async (req, res) => {
     if(req.user.role == 'cook'){
-        const {title, description, ingredients, steps, category} = req.body;
+        const {title, description, ingredients, steps, calories, prepTime, servable, category, image} = req.body;
 
         const newRecipe = Recipe.create({
             title,
             description,
             ingredients,
             steps,
+            calories, 
+            prepTime, 
+            servable,
             category,
-            image: req.body.image || "https://img-global.cpcdn.com/recipes/aa40df72874ba0f7/1280x1280sq70/photo.webp",
-            cook: req.user._id   
+            image: image || "https://img-global.cpcdn.com/recipes/aa40df72874ba0f7/1280x1280sq70/photo.webp",
+            cook: req.user.id   
         });
 
         const cook = await Cook.findByIdAndUpdate(

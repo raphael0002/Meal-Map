@@ -22,14 +22,16 @@ const Sidebar = ({ expanded, setExpanded, children }) => {
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-[#CD5C08] dark:bg-gray-600 border-r shadow-sm px-3 transition-all duration-500">
         <div className="p-4 pb-2 flex justify-between items-center">
-          <h1
-            className={`overflow-hidden text-2xl font-bold font-poppins transition-all ${
-              expanded ? "w-32" : "w-0 hidden"
-            }
+          <Link to="/BrowseRecipes">
+            <h1
+              className={`overflow-hidden text-2xl font-bold font-poppins transition-all ${
+                expanded ? "w-32" : "w-0 hidden"
+              }
             }`}
-          >
-            Meal Map
-          </h1>
+            >
+              Meal Map
+            </h1>
+          </Link>
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="p-1.5 rounded-lg bg-[#6A9C89] hover:bg-[#C1D8C3]"
@@ -82,12 +84,16 @@ const Sidebar = ({ expanded, setExpanded, children }) => {
                 className={`absolute whitespace-nowrap rounded-md bottom-[4.5rem] left-[12rem] text-sm -translate-x-3 transition-all ${
                   threeDotFn ? "visible translate-x-0" : ""
                 } ${!expanded ? "w-0 hidden" : ""}`}
+                onClick={() => setThreeDotFn(true)}
               >
                 <ul className="*:flex *:h-[3rem] *:w-[8rem] bg-gray-600 *:text-white *:font-semibold *:cursor-pointer rounded-md">
-                  <li className="hover:bg-orange-700 justify-center items-center hover:rounded-t-md gap-2">
+                  <Link
+                    to="/Profile"
+                    className="hover:bg-orange-700 justify-center items-center hover:rounded-t-md gap-2"
+                  >
                     <User size={20} />
                     Profile
-                  </li>
+                  </Link>
                   <li className="hover:bg-orange-700 justify-center items-center hover:rounded-b-md gap-2">
                     <LogOut size={18} />
                     log out

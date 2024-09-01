@@ -1,3 +1,10 @@
 /* *{
     font-family: "poppins", sans-serif;
 } */
+
+:root {
+    --primary: #CD5C08;
+    --secondary: #FFF5E4;
+    --tertiary: #C1D8C3;
+    --Quaternary: #6A9C89;
+  }

@@ -10,6 +10,7 @@ router
     .delete(authentication, recipeController.deleteRecipe);
 
 router.get('/recipeByTitle/:title',authentication, recipeController.getRecipeByTitle);
+router.get('/recipes',authentication, recipeController.getRecipes);
 router.get('/recipeByCategory/:category',authentication, recipeController.getRecipeByCategory); 
 router.patch('/:title',authentication, recipeController.updateRecipe);
 router.patch('/commentsAndRatings/:title',authentication, recipeController.addCommentsAndRatings);
