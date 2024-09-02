@@ -10,8 +10,11 @@ import ShoppingCartPage from "./pages/ShoppingCartPage";
 import MyRecipesPage from "./pages/MyRecipesPage";
 import RecipeOverview from "./pages/RecipeOverview";
 import ProfilePage from "./pages/ProfilePage";
+import { useState } from "react";
 
 const App = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <>
       <Routes>
@@ -22,7 +25,7 @@ const App = () => {
           path="/"
           element={
             <ProtectedRoutes>
-              <Home />
+              <Home searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             </ProtectedRoutes>
           }
         >
@@ -42,7 +45,10 @@ const App = () => {
               </ProtectedRoutes>
             }
           />
-          <Route path="/BrowseRecipes" element={<BrowseRecipes />} />
+          <Route
+            path="/BrowseRecipes"
+            element={<BrowseRecipes searchQuery={searchQuery} />}
+          />
           <Route path="/Meal-Planner" element={<MealPlannerPage />} />
           <Route path="/Shopping-Cart" element={<ShoppingCartPage />} />
           <Route path="/My-Recipes" element={<MyRecipesPage />} />

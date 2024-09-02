@@ -15,9 +15,12 @@ import { Link, useLocation } from "react-router-dom";
 
 const SidebarContext = createContext();
 
-const Sidebar = ({ expanded, setExpanded, children }) => {
+const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
   const [threeDotFn, setThreeDotFn] = useState(true);
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-[#CD5C08] dark:bg-gray-600 border-r shadow-sm px-3 transition-all duration-500">
@@ -54,6 +57,7 @@ const Sidebar = ({ expanded, setExpanded, children }) => {
             className={`relative w-full p-2 pl-11 rounded-lg bg-[#C1D8C3] focus:bg-[#C1D8C3] focus:outline-none focus:ring-2 focus:ring-[#6A9C89] focus:border-transparent ${
               expanded ? "w-52" : "w-0 hidden"
             }`}
+            onChange={handleSearch}
           />
         </div>
 

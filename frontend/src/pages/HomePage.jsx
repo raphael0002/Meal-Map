@@ -12,13 +12,17 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useState } from "react";
 
-const HomePage = () => {
+const HomePage = ({ searchQuery, setSearchQuery }) => {
   const [expanded, setExpanded] = useState(true);
   const { value } = useAuth();
   return (
     <div className="flex bg-[#FFF5E4]">
       <div className="flex fixed z-10">
-        <Sidebar expanded={expanded} setExpanded={setExpanded}>
+        <Sidebar
+          expanded={expanded}
+          setExpanded={setExpanded}
+          setSearchQuery={setSearchQuery}
+        >
           <SidebarItem
             icon={<CookingPot size={20} />}
             text="Browse Recipes"
