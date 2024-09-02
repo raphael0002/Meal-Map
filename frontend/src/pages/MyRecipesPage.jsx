@@ -1,9 +1,30 @@
-import { useRecipe } from "../context/recipeProvider";
+import { useAuth } from "../context/authContext";
 import RecipeCard from "../components/RecipeCard";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const fetchRecipeByCook = async (value, setRecipes) => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/cook/recipes", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${value.token}`,
+      },
+    });
+    setRecipes(response.data.data);
+  } catch (e) {
+    console.error("Error fetching recipes:", e);
+  }
+};
 
 const MyRecipesPage = () => {
-  const { recipes } = useRecipe();
-  console.log(recipes);
+  const { value } = useAuth();
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    fetchRecipeByCook(value, setRecipes);
+  }, [value]);
+
   return (
     <div
       key={1}

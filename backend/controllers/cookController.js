@@ -40,10 +40,20 @@ const deleteCook = eah(async(req, res) => {
     });
 });
 
+const getCookData = async(req,res)=> {
+    const id = req.user.id;
+    const cook = await Cook.findById(id);
+    if(cook){
+        res.status(200).json({
+            status:'success',
+            data: cook
+        })
+    }
+}
 const updateCook = eah(async (req, res) => {
     const id = req.user.id;
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['username', 'email', 'password', 'confirmPassword','bio', 'profilePicture'];
+    const allowedUpdates = ['username', 'email', 'bio', 'profilePicture','password', 'confirmPassword',];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
     if(!isValidOperation){
@@ -68,9 +78,30 @@ const updateCook = eah(async (req, res) => {
 
 });
 
+// Get all recipes by cook
+const getRecipesByCook = eah(async (req, res) => {
+    const cookId = req.user.id;
+
+    const cook = await Cook.findById(cookId).populate('myRecipes');
+
+    if (!cook) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Cook not found'
+        });
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: cook.myRecipes
+    });
+});
+
 module.exports = {
     createCook,
     loginCook,
     deleteCook,
-    updateCook
+    updateCook,
+    getRecipesByCook,
+    getCookData
 }

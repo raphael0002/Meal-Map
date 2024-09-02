@@ -52,7 +52,14 @@ const App = () => {
           <Route path="/Meal-Planner" element={<MealPlannerPage />} />
           <Route path="/Shopping-Cart" element={<ShoppingCartPage />} />
           <Route path="/My-Recipes" element={<MyRecipesPage />} />
-          <Route path="/Profile" element={<ProfilePage />} />
+          <Route
+            path="/Profile"
+            element={
+              <ProtectedRoutes>
+                <ProfilePage />
+              </ProtectedRoutes>
+            }
+          />
         </Route>
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>

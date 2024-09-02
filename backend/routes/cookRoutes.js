@@ -10,6 +10,9 @@ router
     .delete(authentication, cookController.deleteCook);
 
 router.post('/login', cookController.loginCook);
+router.get('/profile', authentication, cookController.getCookData);
 router.patch('/profile', authentication, cookController.updateCook);
+
+router.get('/recipes', authentication, cookController.getRecipesByCook);
 
 module.exports = router;

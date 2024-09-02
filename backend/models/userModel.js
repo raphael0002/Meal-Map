@@ -28,10 +28,10 @@ const userSchema = new Schema({
       }
     }
   },
-  favoriteRecipes: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Recipe'
-  }],
+  // favoriteRecipes: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Recipe'
+  // }],
   bio: {
     type: String,
     default: 'No bio provided'
@@ -41,11 +41,24 @@ const userSchema = new Schema({
     default: 'default-profile-picture.jpg'
   },
   shoppingList: [{
-    type: String,
+    ingredient: {
+      type: String,
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true
+    }
   }],
   planner: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Recipe'
+    recipe: {
+      type: Schema.Types.ObjectId,
+      ref: 'Recipe'
+    },
+    plannedFor: {
+      type: Date,
+      required: true
+    }
   }],
   createdAt: {
     type: Date,

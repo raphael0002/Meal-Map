@@ -62,7 +62,7 @@ exports.createRecipe = eah(async (req, res) => {
     if(req.user.role == 'cook'){
         const {title, description, ingredients, steps, calories, prepTime, servable, category, image} = req.body;
 
-        const newRecipe = Recipe.create({
+        const newRecipe = await Recipe.create({
             title,
             description,
             ingredients,
@@ -74,19 +74,18 @@ exports.createRecipe = eah(async (req, res) => {
             image: image || "https://img-global.cpcdn.com/recipes/aa40df72874ba0f7/1280x1280sq70/photo.webp",
             cook: req.user.id   
         });
-
         const cook = await Cook.findByIdAndUpdate(
             req.user.id,
-            { $push: { myRecipes: newRecipe._id } },
+            { $push: { myRecipes: newRecipe.id } },
             { new: true }
         );
-
         if(cook){
+
             return res.status(201).json({
                 status: true,
                 message: "Recipe created successfully",
                 data:{
-                    newRecipe
+                    ...newRecipe
                 }            
             });
         };

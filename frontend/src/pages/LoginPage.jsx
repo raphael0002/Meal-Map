@@ -51,6 +51,7 @@ const LoginPage = () => {
         if (data.success) {
           console.log(data);
           makeValue({
+            username: data.data.user.username,
             email: data.data.user.email,
             role: data.data.role,
             token: data.token,

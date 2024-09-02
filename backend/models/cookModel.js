@@ -31,13 +31,18 @@ const cookSchema = new Schema({
     },
     myRecipes:[
         {
-            type:mongoose.Schema.Types.ObjectId,
+            type:Schema.Types.ObjectId,
             ref:'Recipe'
         }
     ],
+
     bio: {
       type: String,
       default: ''
+    },
+    profilePicture: {
+      type: String,
+      default: 'default-profile-picture.jpg'
     },
     createdAt:{
       type:Date,
@@ -46,6 +51,7 @@ const cookSchema = new Schema({
   });
 
   cookSchema.pre('save', async function(next) {
+    console.log(this.password, this.confirmPassword)  ;
     if(!this.isModified('password')) return next();
 
     this.password = await bcrypt.hash(this.password, 12);

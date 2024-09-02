@@ -12,11 +12,20 @@ import avatar from "../assets/avatar.png";
 import { createContext, useContext, useState } from "react";
 // import DarkModeToggler from "./DarkModeToggler";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const SidebarContext = createContext();
 
 const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
   const [threeDotFn, setThreeDotFn] = useState(true);
+  const { value, makeValue } = useAuth();
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    bio: "",
+    image: "",
+    password: "",
+  });
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -73,9 +82,9 @@ const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
             } `}
           >
             <div className="relative leading-4 dark:text-white">
-              <h4 className="font-semibold">Rohan Shrestha</h4>
+              <h4 className="font-semibold">{value.username}</h4>
               <span className="text-xs text-black font-semibold dark:text-white">
-                rohan@gmail.com
+                {value.email}
               </span>
             </div>
             <MoreVertical
@@ -98,7 +107,17 @@ const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
                     <User size={20} />
                     Profile
                   </Link>
-                  <li className="hover:bg-orange-700 justify-center items-center hover:rounded-b-md gap-2">
+                  <li
+                    className="hover:bg-orange-700 justify-center items-center hover:rounded-b-md gap-2"
+                    onClick={() => {
+                      makeValue({
+                        username: "",
+                        role: "",
+                        email: "",
+                        token: "",
+                      });
+                    }}
+                  >
                     <LogOut size={18} />
                     log out
                   </li>
