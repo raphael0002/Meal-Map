@@ -5,7 +5,7 @@ const RecipeOverview = () => {
   const { recipes } = useRecipe();
   const { recipeId } = useParams();
   const recipeData = recipes.find((recipe) => recipe._id === recipeId);
-  // console.log(recipeDatas);
+  console.log(recipeData);
   return (
     <div className="flex flex-col items-center gap-4 bg-[#FFF5E4] p-0 rounded-xl md:w-3/4 lg:w-full">
       <div className="relative rounded-none shadow-xl md:rounded-xl w-full">
@@ -58,7 +58,7 @@ const RecipeOverview = () => {
       <div className="flex flex-col gap-4 text-rose-red w-full">
         <h2 className="text-2xl">Instructions</h2>
         <ul className="flex flex-col gap-1 px-5 list-decimal">
-          {recipeData.steps.map((recipeStep, index) => {
+          {/* {recipeData.steps.map((recipeStep, index) => {
             return (
               <li key={index}>
                 <p className="ml-5">
@@ -68,7 +68,7 @@ const RecipeOverview = () => {
                 </p>
               </li>
             );
-          })}
+          })} */}
         </ul>
         <hr />
       </div>

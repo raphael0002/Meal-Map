@@ -10,7 +10,12 @@ const DisplayRecipe = ({ category }) => {
     >
       {recipes.map((recipe) => {
         console.log(category, recipe.category[0]);
-        if (category === "All" || category === recipe.category[0]) {
+        if (
+          category === "All" ||
+          category === recipe.category[0] ||
+          category === recipe.category[1] ||
+          category === recipe.category[2]
+        ) {
           return <RecipeCard key={recipe._id} recipe={recipe} />;
         }
       })}

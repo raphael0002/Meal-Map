@@ -55,7 +55,7 @@ const HomePage = () => {
       </div>
       <div
         className={`flex-1 p-4 min-h-screen transition-margin duration-300 ${
-          !expanded ? "ml-24" : "ml-[315px]"
+          !expanded ? "ml-28" : "ml-[315px]"
         }`}
       >
         <Outlet />

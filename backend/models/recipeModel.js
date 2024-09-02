@@ -21,15 +21,14 @@ const RecipeSchema = new Schema({
       }
     }],
     steps: [{
-      stepNumber: {
-        type: Number,
-        required: [true, "A recipe step number must be provided"]
-      },
-      instruction: {
+      // stepNumber: {
+      //   type: Number,
+      //   required: [true, "A recipe step number must be provided"]
+      // },
+      // instruction: {
         type: String,
         required: [true, "A recipe instruction must be provided"]
-      }
-    }],
+      }],
     calories: {
       type: String,
       required: [true, "A recipe calories must be provided"],

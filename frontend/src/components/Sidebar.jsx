@@ -11,7 +11,7 @@ import {
 import avatar from "../assets/avatar.png";
 import { createContext, useContext, useState } from "react";
 // import DarkModeToggler from "./DarkModeToggler";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SidebarContext = createContext();
 
@@ -107,16 +107,18 @@ const Sidebar = ({ expanded, setExpanded, children }) => {
     </aside>
   );
 };
-export function SidebarItem({ icon, text, active, linkTo }) {
+export function SidebarItem({ icon, text, linkTo }) {
   const { expanded } = useContext(SidebarContext);
+  const location = useLocation();
+  const isActive = location.pathname === linkTo;
   return (
     <li>
       <Link
         to={linkTo}
         className={`relative flex items-center py-2 px-3 my-1 font-medium text-[#FFF5E4] dark:text-white rounded-md cursor-pointer group ${
-          active
-            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-            : "hover:bg-[#FFF5E4] hover:text-gray-600"
+          isActive
+            ? "bg-[#F1DEC6] text-black"
+            : "hover:bg-[#F1DEC6] hover:text-black"
         }`}
       >
         {icon}

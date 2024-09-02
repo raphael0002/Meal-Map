@@ -1,26 +1,85 @@
 import { useState } from "react";
-import omlet from "../assets/image-omelette.jpeg";
+import axios from "axios";
+import { useAuth } from "../context/authContext";
 
 const CreateRecipesPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imgUrl, setImgUrl] = useState("");
-  const [ingredient, setIngredient] = useState([]);
-  const [instruction, setInstruction] = useState("");
+  const [ingredients, setIngredients] = useState([]);
+  const [instructions, setInstructions] = useState([""]);
   const [prepTime, setPrepTime] = useState("");
   const [calories, setCalories] = useState("");
+  const [servable, setServable] = useState("");
   const [category, setCategory] = useState([]);
+  const { value } = useAuth();
+
+  const handleIngredientChange = (index, field, val) => {
+    const newIngredients = [...ingredients];
+    newIngredients[index][field] = val;
+    setIngredients(newIngredients);
+  };
+
+  const handleAddIngredient = () => {
+    setIngredients([...ingredients, { name: "", quantity: "" }]);
+  };
+
+  const handleDeleteIngredient = () => {
+    const newIngredients = [...ingredients];
+    newIngredients.splice(newIngredients.length - 1, 1);
+    setIngredients(newIngredients);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(instruction);
+
+    const recipeData = {
+      title,
+      description,
+      ingredients,
+      steps: instructions,
+      calories,
+      prepTime,
+      servable,
+      category,
+      image: imgUrl || "",
+    };
+    console.log(recipeData);
+    axios
+      .post("http://localhost:3000/api/recipe/", recipeData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${value.token}`, // replace with your actual access token
+        },
+      })
+      .then((response) => {
+        console.log("Recipe created successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating recipe:", error);
+        alert("Failed to create recipe. Please try again.");
+      });
+
+    // Clear form inputs
+    setTitle("");
+    setDescription("");
+    setImgUrl("");
+    setIngredients([{ name: "", quantity: "" }]);
+    setInstructions([""]);
+    setPrepTime("");
+    setCalories("");
+    setServable("");
+    setCategory([]);
+    alert("Recipe created successfully!");
   };
+
   return (
-    <div className="flex flex-col bg-[#FFF5E4] p-0 rounded-xl md:w-3/4 lg:w-full">
+    <div className="flex flex-col bg-[#FFF5E4] p-0 rounded-xl max-md:w-3/4 lg:w-auto">
       <h1 className="font-semibold text-3xl py-5 px-5">Create Recipe</h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-5 px-10">
-          <div className="flex justify-evenly gap-6">
-            <div className="flex flex-col gap-4">
+          <div className="flex gap-1">
+            <div className="flex flex-col gap-4 ">
               <div className="flex gap-4 whitespace-nowrap">
                 <label htmlFor="title">Recipe Name</label>
                 <input
@@ -28,7 +87,7 @@ const CreateRecipesPage = () => {
                   value={title}
                   name="recipe-title"
                   id="title"
-                  className="bg-[#C1D8C3] h-8 w-full rounded-md"
+                  className="bg-[#C1D8C3] h-8 w-3/4 rounded-md"
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
@@ -39,7 +98,7 @@ const CreateRecipesPage = () => {
                   value={imgUrl}
                   name="recipe-image"
                   id="image-url"
-                  className="bg-[#C1D8C3] h-8 w-full rounded-md"
+                  className="bg-[#C1D8C3] h-8 w-3/4 rounded-md"
                   onChange={(e) => setImgUrl(e.target.value)}
                 />
               </div>
@@ -51,40 +110,40 @@ const CreateRecipesPage = () => {
                   cols={80}
                   name="recipe-description"
                   id="description"
-                  className="bg-[#C1D8C3] h-[10rem] w-full rounded-md"
+                  className="bg-[#C1D8C3] h-[10rem] w-3/4 rounded-md"
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
-              <div className="flex *:flex ml-[32px] gap-2 *:gap-2 whitespace-nowrap">
+              <div className="flex *:flex ml-[32px] gap-3 w-5/6 *:gap-2 *:whitespace-nowrap">
                 <div>
                   <label htmlFor="">Prep Time:</label>
                   <input
                     value={prepTime}
                     type="text"
-                    name="prep-time"
+                    name="prep-timeField"
                     id="prep-time"
                     className="bg-[#C1D8C3] h-8 w-full rounded-md"
                     onChange={(e) => setPrepTime(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label htmlFor="">Calories:</label>
+                  <label htmlFor="calories">Calories:</label>
                   <input
                     type="text"
                     value={calories}
-                    name="prep-time"
-                    id="prep-time"
+                    name="caloriesField"
+                    id="calories"
                     className="bg-[#C1D8C3] h-8 w-full rounded-md"
                     onChange={(e) => setCalories(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label htmlFor="">category:</label>
+                  <label htmlFor="category">Category:</label>
                   <input
                     type="text"
                     value={category}
-                    name="prep-time"
-                    id="prep-time"
+                    name="categoryField"
+                    id="category"
                     className="bg-[#C1D8C3] h-8 w-full rounded-md"
                     onChange={(e) => {
                       const categories = e.target.value.split(",");
@@ -92,55 +151,92 @@ const CreateRecipesPage = () => {
                     }}
                   />
                 </div>
+                <div>
+                  <label htmlFor="servable">Servable:</label>
+                  <input
+                    type="text"
+                    value={servable}
+                    name="servableField"
+                    id="servable"
+                    className="bg-[#C1D8C3] h-8 w-full rounded-md"
+                    onChange={(e) => setServable(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
-            <img
-              src={imgUrl ? imgUrl : omlet}
-              alt="Recipe Image"
-              width={384}
-              className="h-auto w-96 rounded-md"
-            />
+            <div className="w-[50%] h-auto">
+              <img
+                src={
+                  imgUrl
+                    ? imgUrl
+                    : "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1hR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg"
+                }
+                alt="Recipe Image"
+                className="h-auto w-auto rounded-md bg-[#C1D8C3]"
+              />
+            </div>
           </div>
           <div className="flex justify-evenly items-center gap-4">
-            <div className="flex flex-col items-end gap-4 ml-3">
-              <div className="flex gap-2">
+            <div className="flex flex-row items-start gap-4 ml-3 w-full">
+              <div className="flex gap-2 flex-col">
                 <label htmlFor="">Ingredients:</label>
-                <textarea
-                  value={ingredient}
-                  cols={50}
-                  rows={100}
-                  name="ingredients"
-                  id="ingredients"
-                  className="bg-[#C1D8C3] h-96 w-full rounded-md"
-                  onChange={(e) => {
-                    setIngredient(e.target.value.split(/[,|\n]+/));
-                  }}
-                />
+                {ingredients.map((ingredient, index) => (
+                  <div key={index} className="flex gap-2 w-full *:py-2 *:px-2">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={ingredient.name}
+                      className="bg-[#C1D8C3] h-8 w-1/2 rounded-md"
+                      onChange={(e) =>
+                        handleIngredientChange(index, "name", e.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Quantity"
+                      value={ingredient.quantity}
+                      className="bg-[#C1D8C3] h-8 w-1/2 rounded-md"
+                      onChange={(e) =>
+                        handleIngredientChange(
+                          index,
+                          "quantity",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                ))}
+                <div className="flex gap-4 ml-[8rem] *:py-2 *:px-6 *:rounded-md *:bg-[#6A9C89] justify-start my-[0.95rem] whitespace-nowrap">
+                  <button
+                    type="button"
+                    className="hover:bg-[#C1D8C3] w-1/2 mt-2"
+                    onClick={handleAddIngredient}
+                  >
+                    Add Ingredient
+                  </button>
+                  <button
+                    type="button"
+                    className="hover:bg-[#C1D8C3] w-1/2 mt-2"
+                    onClick={handleDeleteIngredient}
+                  >
+                    Delete Ingredient
+                  </button>
+                </div>
               </div>
-
-              <div className="flex gap-4 *:py-2 *:px-6 *:rounded-md *:bg-[#6A9C89] ">
-                <button className="hover:bg-[#C1D8C3]">Edit</button>
-                <button className="hover:bg-[#C1D8C3]">Save</button>
-              </div>
-            </div>
-            <div className="flex flex-col items-end gap-2">
-              <div className="flex gap-2">
-                <label htmlFor="">Instructions:</label>
+              <div className="flex flex-col gap-2 w-full">
+                <label htmlFor="instructions">Instructions:</label>
                 <textarea
-                  value={instruction}
+                  value={instructions.join("\n")}
                   cols={85}
                   rows={100}
-                  name="ingredients"
-                  id="ingredients"
+                  name="instructions"
+                  id="instructions"
                   className="bg-[#C1D8C3] h-96 w-full rounded-md"
                   onChange={(e) => {
-                    setInstruction(e.target.value.split(/[,|\n]+/));
+                    const value = e.target.value.split("\n");
+                    setInstructions(value);
                   }}
                 />
-              </div>
-              <div className="flex gap-4 *:py-2 *:px-6 *:rounded-md *:bg-[#6A9C89] ">
-                <button className="hover:bg-[#C1D8C3]">Edit</button>
-                <button className="hover:bg-[#C1D8C3]">Save</button>
               </div>
             </div>
           </div>
@@ -150,7 +246,7 @@ const CreateRecipesPage = () => {
           <button type="submit" className="hover:bg-[#C1D8C3]">
             Add
           </button>
-          <button className="hover:bg-[#C1D8C3] ">Delete</button>
+          <button className="hover:bg-[#C1D8C3]">Delete</button>
         </div>
       </form>
     </div>
