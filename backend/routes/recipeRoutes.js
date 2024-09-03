@@ -13,7 +13,7 @@ router.get('/recipeByTitle/:title',authentication, recipeController.getRecipeByT
 router.get('/recipes',authentication, recipeController.getRecipes);
 router.get('/recipeByCategory/:category',authentication, recipeController.getRecipeByCategory); 
 router.patch('/:title',authentication, recipeController.updateRecipe);
-router.patch('/commentsAndRatings/:title',authentication, recipeController.addCommentsAndRatings);
+router.patch('/commentsAndRatings/:id',authentication, recipeController.addCommentsAndRatings);
 
 
 module.exports = router;

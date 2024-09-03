@@ -41,22 +41,23 @@ const userSchema = new Schema({
     default: 'default-profile-picture.jpg'
   },
   shoppingList: [{
-    ingredient: {
+    ingredient:[{
+    name: {
       type: String,
       required: true
     },
     quantity: {
-      type: Number,
+      type: String,
       required: true
     }
-  }],
+  }]}],
   planner: [{
     recipe: {
       type: Schema.Types.ObjectId,
       ref: 'Recipe'
     },
     plannedFor: {
-      type: Date,
+      type: String,
       required: true
     }
   }],

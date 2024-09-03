@@ -68,10 +68,15 @@ const updateUser = eah(async (req, res) => {
 
 });
 
-// Add Ingredient to Shopping List
+
 const addIngredientToShoppingList = eah(async (req, res) => {
-    const { ingredient, quantity, unit } = req.body;
-    const user = await User.findById(req.user.id);
+    const { ingredients} = req.body;
+    let ingredientData = [{}];
+    ingredients.map((ingredient) => ingredientData.push({name: ingredient.name, quantity: ingredient.quantity}))
+    console.log(ingredientData);
+    const user = await User.findByIdAndUpdate(req.user.id, {
+        $push: { shoppingList: {ingredient:ingredientData} }
+    },{new: true});
 
     if(!user) {
         return res.status(404).json({
@@ -80,16 +85,14 @@ const addIngredientToShoppingList = eah(async (req, res) => {
         });
     }
 
-    user.shoppingList.push({ ingredient, quantity, unit });
-    await user.save();
-
     res.status(200).json({
         status: 'success',
         data: user.shoppingList
+        
     });
 });
 
-// Get Shopping List
+
 const getShoppingList = eah(async (req, res) => {
     const user = await User.findById(req.user.id).select('shoppingList');
 
@@ -106,7 +109,7 @@ const getShoppingList = eah(async (req, res) => {
     });
 });
 
-// Update Shopping List
+
 const updateShoppingList = eah(async (req, res) => {
     const { ingredient, quantity, unit } = req.body;
     const user = await User.findById(req.user.id);
@@ -137,10 +140,10 @@ const updateShoppingList = eah(async (req, res) => {
     });
 });
 
-// Plan a Meal
-const planMeal = eah(async (req, res) => {
-    const { recipeId, plannedFor } = req.body;
-    const user = await User.findById(req.user.id);
+const deleteShoppingListItem = eah(async (req, res) => {
+    const user = await User.findByIdAndUpdate(req.user.id, {
+        $pull: { shoppingList: { ingredient:{_id: req.body.id }} }
+    }, { new: true });
 
     if(!user) {
         return res.status(404).json({
@@ -149,8 +152,29 @@ const planMeal = eah(async (req, res) => {
         });
     }
 
-    user.planner.push({ recipe: recipeId, plannedFor });
-    await user.save();
+    res.status(204).json({
+        status: 'success',
+        data: null
+    });
+});
+
+const planMeal = eah(async (req, res) => {
+    const { recipeId, plannedFor } = req.body;
+    const user = await User.findByIdAndUpdate(req.user.id,{
+          $push: {
+            planner:{ recipe: recipeId, plannedFor }
+         }  
+    },{new:true,runValidators: true});
+
+    if(!user) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'User not found'
+        });
+    }
+
+    // user.planner.push({ recipe: recipeId, plannedFor });
+    // await user.save();
 
     res.status(200).json({
         status: 'success',
@@ -158,7 +182,6 @@ const planMeal = eah(async (req, res) => {
     });
 });
 
-// Get Planner
 const getPlanner = eah(async (req, res) => {
     const user = await User.findById(req.user.id).populate('planner.recipe');
 
@@ -175,6 +198,33 @@ const getPlanner = eah(async (req, res) => {
     });
 });
 
+const deletePlanner = async (req, res)=>{
+    const user = await  User.findByIdAndUpdate(req.user.id,{
+        $pull: { planner: { _id: req.params.plannerId } }
+    },{new:true});
+    if(!user) {
+        res.status(404).json({
+            status: 'fail',
+            message: 'User not found'
+        });
+    };
+
+    res.status(204).json({
+        status:'success',
+        data: null
+    });
+}
+
+const getUserData = eah(async (req, res) => {
+    const id = req.user.id;
+    const user = await User.findById(id);
+    if(user){
+        res.status(200).json({
+            status:'success',
+            data: user
+        })
+    }
+})
 
 
 
@@ -187,5 +237,8 @@ module.exports = {
     getShoppingList,
     updateShoppingList,
     planMeal,
-    getPlanner
+    getPlanner,
+    getUserData,
+    deletePlanner,
+    deleteShoppingListItem
 }

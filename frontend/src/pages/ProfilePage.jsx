@@ -90,16 +90,16 @@ const ProfilePage = () => {
       )}
       {!isEditing ? (
         // View Mode
-        <div className="flex items-center justify-center mx-auto">
-          <div className="mb-4">
+        <div className="flex justify-center items-center max-md:flex-col">
+          <div className="mb-4 w-1/4">
             <img
               src={user.profilePicture || "https://via.placeholder.com/150"}
               alt="Profile"
-              className="w-2/4 h-2/4 rounded-full ml-auto"
+              className="w-auto h-auto rounded-full ml-auto"
             />
           </div>
           <div className="flex flex-col">
-            <div className="flex flex-col ml-10">
+            <div className="flex flex-col ml-10 max-md:justify-center max-md:items-center max-md:ml-0">
               <div className="mb-4">
                 <h3 className="text-xl font-medium">{user.username}</h3>
               </div>
@@ -107,7 +107,9 @@ const ProfilePage = () => {
                 <h3 className="text-xl font-medium">{user.email}</h3>
               </div>
               <div className="mb-4 w-3/4">
-                <h3 className="text-xl font-medium">{user.bio}</h3>
+                <h3 className="text-xl font-medium whitespace-pre-line max-md:text-center">
+                  {user.bio}
+                </h3>
               </div>
             </div>
             <div className="mb-4 self-end mr-56 mt-10">

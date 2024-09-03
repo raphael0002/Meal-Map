@@ -42,18 +42,23 @@ const HomePage = ({ searchQuery, setSearchQuery }) => {
               />
             </>
           )}
-          <div className="w-full my-2 h-[1px] bg-[#FFF5E4] "></div>
-          <SidebarItem
-            icon={<Calendar size={20} />}
-            text="Meal Plan"
-            linkTo="/Meal-Planner"
-          />
-          <SidebarItem
-            icon={<ShoppingBasket size={20} />}
-            text="Groceries"
-            linkTo="/Shopping-Cart"
-          />
-          <div className="w-full h-[1.5px] bg-[#FFF5E4] my-2"></div>
+          {value.role === "user" && (
+            <div>
+              <div className="w-full my-2 h-[1px] bg-[#FFF5E4] "></div>
+              <SidebarItem
+                icon={<Calendar size={20} />}
+                text="Meal Plan"
+                linkTo="/Meal-Planner"
+              />
+              <SidebarItem
+                icon={<ShoppingBasket size={20} />}
+                text="Groceries"
+                linkTo="/Shopping-Cart"
+              />
+              <div className="w-full h-[1.5px] bg-[#FFF5E4] my-2"></div>
+            </div>
+          )}
+
           {/* <SidebarItem icon={<Settings size={20} />} text="Settings" /> */}
         </Sidebar>
       </div>

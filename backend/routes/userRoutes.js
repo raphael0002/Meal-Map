@@ -12,11 +12,15 @@ router
 router.post('/login', userController.loginUser);
 router.patch('/profile', authentication, userController.updateUser);
 
-router.post('/shopping-list', authentication, userController.addIngredientToShoppingList);
+router.patch('/shopping-list', authentication, userController.addIngredientToShoppingList);
 router.get('/shopping-list', authentication, userController.getShoppingList);
-router.put('/shopping-list/:itemId', authentication, userController.updateShoppingList);
+router.patch('/shopping-list/:itemId', authentication, userController.updateShoppingList);
+router.delete('/shopping-list', authentication, userController.deleteShoppingListItem);
 
 router.post('/planner', authentication, userController.planMeal);
 router.get('/planner', authentication, userController.getPlanner);
+router.patch('/planner/:plannerId', authentication, userController.deletePlanner);
+
+router.get('/profile', authentication, userController.getUserData);
 
 module.exports = router;

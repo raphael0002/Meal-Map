@@ -180,11 +180,11 @@ exports.deleteRecipe = eah(async (req, res) => {
 });
 
 exports.addCommentsAndRatings = eah(async (req, res) => {
-    const {title} = req.params;
+    const {id} = req.params;
     const comment = req.body.comment || null;
     const rating = req.body.rating || null;
     const commentedAndRated = await Recipe.findOneAndUpdate({
-        title
+        _id:id
     }, {
         likes: rating,
         $push:{
