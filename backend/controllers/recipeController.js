@@ -100,11 +100,11 @@ exports.createRecipe = eah(async (req, res) => {
 
 exports.updateRecipe = eah(async (req, res) => {
    if(req.user.role == 'cook'){
-    const recipeTitle = req.params.tittle;
+    const recipeId = req.params.recipeId;
 
     const updateRecipe = await Recipe.findOneAndUpdate({
-        title: recipeTitle,
-        cook:req.user._id
+        _id: recipeId,
+        cook:req.user.id
     }, req.body, {new: true});
 
     if(updateRecipe){

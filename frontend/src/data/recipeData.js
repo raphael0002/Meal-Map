@@ -15,7 +15,7 @@ const menu_lst = [{
     img:"https://images.immediate.co.uk/production/volatile/sites/30/2014/05/Epic-summer-salad-hub-2646e6e.jpg"
 },
 {
-    name: 'Desert', 
+    name: 'Dessert', 
     img:"https://cdn.hswstatic.com/gif/desserts-update.jpg"
 }];
 

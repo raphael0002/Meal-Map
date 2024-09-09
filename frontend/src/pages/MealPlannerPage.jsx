@@ -47,7 +47,6 @@ const MealPlannerPage = () => {
         }
       );
       setPlanner([...planner, response.data.data]);
-      console.log(planner);
       setSelectedRecipe("");
       setPlannedFor("");
       window.location.reload(false);
@@ -58,11 +57,15 @@ const MealPlannerPage = () => {
 
   const handleDeletePlan = async (planId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/user/planner/${planId}`, {
-        headers: {
-          Authorization: `Bearer ${value.token}`,
-        },
-      });
+      await axios.patch(
+        `http://localhost:3000/api/user/planner/${planId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${value.token}`,
+          },
+        }
+      );
       setPlanner(planner.filter((plan) => plan._id !== planId));
     } catch (error) {
       console.error("Error deleting meal plan:", error);
@@ -107,33 +110,40 @@ const MealPlannerPage = () => {
 
       <div>
         <h2 className="text-xl font-semibold mb-2">Your Meal Plans</h2>
-        {planner.map((plan) => (
-          <li
-            key={plan._id}
-            className="flex justify-between items-center p-2 border border-gray-300 rounded mb-5 bg-white shadow-md"
-          >
-            <div className="flex gap-5">
-              <img
-                src={plan.recipe.image}
-                alt={plan.recipe.title}
-                className="h-16 w-20 object-cover"
-              />
-              <div>
-                <h3 className="font-semibold">{plan.recipe.title}</h3>
-                <p>
-                  Planned for: {new Date(plan.plannedFor).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => handleDeletePlan(plan._id)}
-              className="p-2 bg-green-500 text-white rounded"
+        <ul>
+          {planner.map((plan) => (
+            <li
+              key={plan._id}
+              className="flex justify-between items-center p-2 border border-gray-300 rounded mb-5 bg-white shadow-md"
             >
-              Completed
-            </button>
-          </li>
-        ))}
+              <div className="flex gap-5">
+                {plan.recipe && (
+                  <>
+                    <img
+                      src={plan.recipe.image}
+                      alt={plan.recipe.title}
+                      className="h-16 w-20 object-cover"
+                    />
+                    <div>
+                      <h3 className="font-semibold">{plan.recipe.title}</h3>
+                      <p>
+                        Planned for:{" "}
+                        {new Date(plan.plannedFor).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <button
+                onClick={() => handleDeletePlan(plan._id)}
+                className="p-2 bg-green-500 text-white rounded"
+              >
+                Completed
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

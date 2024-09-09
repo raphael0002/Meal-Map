@@ -11,6 +11,7 @@ import MyRecipesPage from "./pages/MyRecipesPage";
 import RecipeOverview from "./pages/RecipeOverview";
 import ProfilePage from "./pages/ProfilePage";
 import { useState } from "react";
+import EditRecipePage from "./pages/EditRecipePage";
 
 const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,6 +43,14 @@ const App = () => {
             element={
               <ProtectedRoutes>
                 <CreateRecipesPage />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/EditRecipe/:recipeIdForEdit/edit"
+            element={
+              <ProtectedRoutes>
+                <EditRecipePage />
               </ProtectedRoutes>
             }
           />

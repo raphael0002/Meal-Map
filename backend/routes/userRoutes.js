@@ -14,8 +14,7 @@ router.patch('/profile', authentication, userController.updateUser);
 
 router.patch('/shopping-list', authentication, userController.addIngredientToShoppingList);
 router.get('/shopping-list', authentication, userController.getShoppingList);
-router.patch('/shopping-list/:itemId', authentication, userController.updateShoppingList);
-router.delete('/shopping-list', authentication, userController.deleteShoppingListItem);
+router.delete('/shopping-list/:ingredientId', authentication, userController.deleteShoppingListItem);
 
 router.post('/planner', authentication, userController.planMeal);
 router.get('/planner', authentication, userController.getPlanner);

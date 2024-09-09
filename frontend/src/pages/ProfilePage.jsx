@@ -95,11 +95,11 @@ const ProfilePage = () => {
             <img
               src={user.profilePicture || "https://via.placeholder.com/150"}
               alt="Profile"
-              className="w-auto h-auto rounded-full ml-auto"
+              className="h-40 max-md:h-auto rounded-full ml-auto"
             />
           </div>
-          <div className="flex flex-col">
-            <div className="flex flex-col ml-10 max-md:justify-center max-md:items-center max-md:ml-0">
+          <div className="flex flex-col w-3/4">
+            <div className="flex flex-col ml-10 max-md:justify-center max-md:items-center max-md:ml-0 ">
               <div className="mb-4">
                 <h3 className="text-xl font-medium">{user.username}</h3>
               </div>
@@ -112,7 +112,7 @@ const ProfilePage = () => {
                 </h3>
               </div>
             </div>
-            <div className="mb-4 self-end mr-56 mt-10">
+            <div className="mb-4 self-center max-md:mx-auto mr-56 mt-10">
               <button
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 onClick={() => setIsEditing(true)}

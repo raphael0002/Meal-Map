@@ -32,7 +32,9 @@ const MyRecipesPage = () => {
     >
       {recipes.map((recipe) => {
         if (recipe.cook) {
-          return <RecipeCard key={recipe._id} recipe={recipe} />;
+          return (
+            <RecipeCard key={recipe._id} recipe={recipe} user={value.role} />
+          );
         }
       })}
     </div>

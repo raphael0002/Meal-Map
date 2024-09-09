@@ -73,7 +73,6 @@ const addIngredientToShoppingList = eah(async (req, res) => {
     const { ingredients} = req.body;
     let ingredientData = [{}];
     ingredients.map((ingredient) => ingredientData.push({name: ingredient.name, quantity: ingredient.quantity}))
-    console.log(ingredientData);
     const user = await User.findByIdAndUpdate(req.user.id, {
         $push: { shoppingList: {ingredient:ingredientData} }
     },{new: true});
@@ -141,8 +140,9 @@ const updateShoppingList = eah(async (req, res) => {
 });
 
 const deleteShoppingListItem = eah(async (req, res) => {
+    console.log(req.params.ingredientId);
     const user = await User.findByIdAndUpdate(req.user.id, {
-        $pull: { shoppingList: { ingredient:{_id: req.body.id }} }
+        $pull: { shoppingList: { _id: req.params.ingredientId } }
     }, { new: true });
 
     if(!user) {
@@ -199,6 +199,7 @@ const getPlanner = eah(async (req, res) => {
 });
 
 const deletePlanner = async (req, res)=>{
+    console.log(req.params.plannerId);
     const user = await  User.findByIdAndUpdate(req.user.id,{
         $pull: { planner: { _id: req.params.plannerId } }
     },{new:true});

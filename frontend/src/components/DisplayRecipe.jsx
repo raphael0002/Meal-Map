@@ -19,13 +19,13 @@ const DisplayRecipe = ({ category, searchQuery }) => {
             category === "All" ||
             category === recipe.category[0] ||
             category === recipe.category[1] ||
-            category === recipe.category[2]
+            category === recipe.category[2] ||
+            category === recipe.category[3]
           ) {
             return <RecipeCard key={recipe._id} recipe={recipe} />;
           }
         }
       })}
-      {/* <RecipeCard recipes={recipes} /> */}
     </div>
   );
 };

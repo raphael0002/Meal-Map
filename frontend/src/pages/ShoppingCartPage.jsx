@@ -31,11 +31,16 @@ const ShoppingCart = () => {
 
   return (
     <div className="shopping-cart">
-      <h2>Your Shopping List</h2>
+      <h2 className="text-2xl font-semibold">Your Shopping List</h2>
       <div className="">
         <div className="p-5 grid grid-cols-2 gap-1">
           {shoppingList.map((items, index) => (
-            <ShoppingCartCard key={index} shoppingList={items} />
+            <ShoppingCartCard
+              key={index}
+              items={items}
+              shoppingList={shoppingList}
+              setShoppingList={setShoppingList}
+            />
           ))}
         </div>
       </div>
