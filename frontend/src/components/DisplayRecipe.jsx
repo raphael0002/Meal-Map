@@ -1,8 +1,9 @@
 import RecipeCard from "./RecipeCard";
 import { useRecipe } from "../context/recipeProvider";
 
-const DisplayRecipe = ({ category, searchQuery }) => {
+const DisplayRecipe = ({ category, setCategory, searchQuery }) => {
   const { recipes } = useRecipe();
+
   return (
     <div
       key={1}

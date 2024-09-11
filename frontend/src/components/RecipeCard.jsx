@@ -1,16 +1,44 @@
+/* eslint-disable react/prop-types */
 import { Link, useNavigate } from "react-router-dom";
-import { Timer, Flame, Users } from "lucide-react";
+import { Timer, Flame, Users, Share2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import DeleteBox from "./DeleteBox";
+import axios from "axios";
+import { useAuth } from "../context/authContext";
+import ShareBox from "./ShareBox";
 
 const RecipeCard = ({ recipe, user }) => {
+  const { value } = useAuth();
   const navigate = useNavigate();
+  const [showDeleteBox, setShowDeletebox] = useState(false);
+  const [shareRecipeBox, setShareRecipeBox] = useState(false);
+
+  const handleDeleteBoxToggle = () => {
+    setShowDeletebox(!showDeleteBox);
+  };
+
+  const handleShareRecipeBoxToggle = () => {
+    setShareRecipeBox(!shareRecipeBox);
+  };
 
   const handleEdit = () => {
     navigate(`/EditRecipe/${recipe._id}/edit`, { state: { recipe } });
   };
 
-  const handleDelete = () => {
+  const handleDelete = (recipeId) => {
+    console.log(recipeId);
     // Add the delete functionality here
-    // Example: axios.delete(`/api/recipe/${recipe._id}`);
+    try {
+      axios.delete(`http://localhost:3000/api/recipe/recipes/${recipeId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${value.token}`,
+        },
+      });
+    } catch (e) {
+      console.log("Error deleting recipe" + e);
+    }
+
     alert("Delete functionality to be implemented");
   };
 
@@ -27,7 +55,11 @@ const RecipeCard = ({ recipe, user }) => {
         />
       </div>
       <div className="p-4">
-        <h2 className="text-2xl text-[#CD5C08]">{recipe.title}</h2>
+        <div className="flex justify-between">
+          <h2 className="text-2xl text-[#CD5C08]">{recipe.title}</h2>
+          <Share2 color="#242424" onClick={handleShareRecipeBoxToggle} />
+        </div>
+
         <div className="flex justify-between mt-4 mb-4 text-gray-500">
           <div className="flex items-center">
             <Timer size={20} />
@@ -65,7 +97,7 @@ const RecipeCard = ({ recipe, user }) => {
               </button>
 
               <button
-                onClick={handleDelete}
+                onClick={handleDeleteBoxToggle}
                 className="text-white bg-red-500 py-2 px-4 rounded-md"
               >
                 Delete
@@ -86,6 +118,18 @@ const RecipeCard = ({ recipe, user }) => {
           </span>
         </div>
       </div>
+      <DeleteBox
+        showDeleteBox={showDeleteBox}
+        onClose={() => setShowDeletebox(false)}
+        onSubmit={handleDelete}
+        recipeId={recipe._id}
+      />
+
+      <ShareBox
+        show={shareRecipeBox}
+        onClose={() => setShareRecipeBox(false)}
+        link={`http://localhost:5173/Overview/${recipe._id}/${recipe.title}`}
+      />
     </div>
   );
 };

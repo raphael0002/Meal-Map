@@ -56,7 +56,11 @@ const App = () => {
           />
           <Route
             path="/BrowseRecipes"
-            element={<BrowseRecipes searchQuery={searchQuery} />}
+            element={
+              <ProtectedRoutes>
+                <BrowseRecipes searchQuery={searchQuery} />
+              </ProtectedRoutes>
+            }
           />
           <Route path="/Meal-Planner" element={<MealPlannerPage />} />
           <Route path="/Shopping-Cart" element={<ShoppingCartPage />} />

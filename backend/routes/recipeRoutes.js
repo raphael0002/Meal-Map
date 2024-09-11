@@ -14,6 +14,7 @@ router.get('/recipes',authentication, recipeController.getRecipes);
 router.get('/recipeByCategory/:category',authentication, recipeController.getRecipeByCategory); 
 router.patch('/:recipeId/:title',authentication, recipeController.updateRecipe);
 router.patch('/commentsAndRatings/:id',authentication, recipeController.addCommentsAndRatings);
+router.delete('/recipes/:id',authentication, recipeController.deleteRecipe);
 
 
 module.exports = router;

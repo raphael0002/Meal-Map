@@ -157,10 +157,10 @@ exports.updateIngredients = eah(async (req, res) => {
 
 exports.deleteRecipe = eah(async (req, res) => {
    if(req.user.role == 'cook'){
-        const recipeTitle = req.params.tittle;
+    console.log(req.params.id);
+        const recipeId = req.params.id;
         const deleteRecipe = await Recipe.findOneAndDelete({
-            title:recipeTitle,
-            cook:req.user._id
+            _id:recipeId
             });
 
         if(deleteRecipe){

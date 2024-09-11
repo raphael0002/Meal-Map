@@ -10,7 +10,11 @@ const BrowseRecipes = ({ searchQuery }) => {
   return (
     <div>
       <ExploreMenu category={category} setCategory={setCategory} />
-      <DisplayRecipe category={category} searchQuery={searchQuery} />
+      <DisplayRecipe
+        category={category}
+        setCategory={setCategory}
+        searchQuery={searchQuery}
+      />
     </div>
   );
 };
