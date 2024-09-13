@@ -5,6 +5,7 @@ import StarRating from "../components/ratingandcomment/StarRating";
 import FeedbackModal from "../components/ratingandcomment/FeedbackModal";
 import { useState } from "react";
 import { useAuth } from "../context/authContext";
+import ShowRatingAndComments from "../components/ShowRatingAndComments";
 
 const RecipeOverview = () => {
   const { value } = useAuth();
@@ -23,11 +24,12 @@ const RecipeOverview = () => {
   const handleSubmitFeedback = async (comment) => {
     try {
       console.log(recipeData);
-      const response = await axios.patch(
+      const response = await axios.post(
         `http://localhost:3000/api/recipe/commentsAndRatings/${recipeId}`,
         {
           rating,
           comment,
+          username: value.username,
         },
         {
           headers: {
@@ -143,6 +145,7 @@ const RecipeOverview = () => {
         onClose={() => setShowModal(false)}
         onSubmit={handleSubmitFeedback}
       />
+      <ShowRatingAndComments recipeId={recipeId} />
     </div>
   );
 };

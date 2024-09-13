@@ -38,8 +38,6 @@ const RecipeCard = ({ recipe, user }) => {
     } catch (e) {
       console.log("Error deleting recipe" + e);
     }
-
-    alert("Delete functionality to be implemented");
   };
 
   return (

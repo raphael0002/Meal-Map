@@ -56,16 +56,23 @@ const RecipeSchema = new Schema({
       ref: 'Cook',
       // required: [true, "A cook Id/name must be provided"]
     },
-    likes: {
-      type: Number,
-      default: 0
-    },
+    // likes: {
+    //   type: Number,
+    //   default: 0
+    // },
     comments: [{
       user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
       },
       comment: {
+        type: String,
+      },
+      like:{
+        type: Number,
+        default: 0
+      },
+      username:{
         type: String,
       },
       createdAt: {

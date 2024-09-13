@@ -8,7 +8,6 @@ const EditRecipePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const recipeToEdit = location.state?.recipe || null;
-  console.log(recipeToEdit);
   const [title, setTitle] = useState(recipeToEdit.title);
   const [description, setDescription] = useState(recipeToEdit.description);
   const [imgUrl, setImgUrl] = useState(recipeToEdit.image);

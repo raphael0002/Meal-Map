@@ -183,15 +183,18 @@ exports.addCommentsAndRatings = eah(async (req, res) => {
     const {id} = req.params;
     const comment = req.body.comment || null;
     const rating = req.body.rating || null;
+    const username = req.body.username || null;
     const commentedAndRated = await Recipe.findOneAndUpdate({
         _id:id
-    }, {
-        likes: rating,
+    }, {    
         $push:{
             comments: {
                 user: req.user._id,
-                comment
-            }
+                comment,
+                like: rating,
+                username
+            },
+            
         }
     },{new: true})
     if(commentedAndRated){
@@ -206,3 +209,18 @@ exports.addCommentsAndRatings = eah(async (req, res) => {
     
     throw new Error("Cannot add comments and ratings");
 });
+
+exports.getRatingsAndComments = async (req, res) => {
+    try {
+      const recipe = await Recipe.findById(req.params.id).populate('comments.user'); // Fetch recipe with user data for comments
+      if (!recipe) {
+        return res.status(404).json({ message: 'Recipe not found' });
+      }
+      res.status(200).json({
+        status: true,
+        data: recipe.comments,
+      });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };

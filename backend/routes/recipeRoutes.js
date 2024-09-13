@@ -13,7 +13,8 @@ router.get('/recipeByTitle/:title',authentication, recipeController.getRecipeByT
 router.get('/recipes',authentication, recipeController.getRecipes);
 router.get('/recipeByCategory/:category',authentication, recipeController.getRecipeByCategory); 
 router.patch('/:recipeId/:title',authentication, recipeController.updateRecipe);
-router.patch('/commentsAndRatings/:id',authentication, recipeController.addCommentsAndRatings);
+router.post('/commentsAndRatings/:id',authentication, recipeController.addCommentsAndRatings);
+router.get('/commentsAndRatings/:id',authentication, recipeController.getRatingsAndComments);
 router.delete('/recipes/:id',authentication, recipeController.deleteRecipe);
 
 
