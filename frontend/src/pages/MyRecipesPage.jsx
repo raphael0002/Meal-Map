@@ -26,17 +26,20 @@ const MyRecipesPage = () => {
   }, [value]);
 
   return (
-    <div
-      key={1}
-      className="grid gap-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 mb-16"
-    >
-      {recipes.map((recipe) => {
-        if (recipe.cook) {
-          return (
-            <RecipeCard key={recipe._id} recipe={recipe} user={value.role} />
-          );
-        }
-      })}
+    <div className="flex flex-col">
+      <h1 className="font-semibold text-3xl mb-5">Your Recipes!</h1>
+      <div
+        key={1}
+        className="grid gap-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 mb-16"
+      >
+        {recipes.map((recipe) => {
+          if (recipe.cook) {
+            return (
+              <RecipeCard key={recipe._id} recipe={recipe} user={value.role} />
+            );
+          }
+        })}
+      </div>
     </div>
   );
 };

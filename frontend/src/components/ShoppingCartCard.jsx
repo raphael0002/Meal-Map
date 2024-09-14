@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "../context/authContext";
 
 const ShoppingCartCard = ({ items, shoppingList, setShoppingList }) => {
-  console.log(items);
   const { value } = useAuth();
   const ingredients = items.ingredient.slice(1, items.ingredient.length);
   const deleteShoppingCart = async (id) => {
@@ -20,8 +19,14 @@ const ShoppingCartCard = ({ items, shoppingList, setShoppingList }) => {
     }
   };
   return (
-    <div className="flex flex-col justify-between bg-[#6A9C89] w-full rounded-lg">
-      <ul className="flex flex-wrap justify-evenly">
+    <div className="flex flex-col justify-between bg-[#6A9C89] w-auto rounded-lg">
+      <ul
+        className={`${
+          ingredients.length > 1
+            ? "max-h-56 overflow-y-auto no-scrollbar scroll-smooth" // Apply scroll for more than one ingredient
+            : "h-auto" // Auto height for one ingredient
+        } flex flex-wrap justify-evenly gap-2`}
+      >
         {ingredients.map((ingredient, index) => {
           if (ingredient[0]) {
             return null;

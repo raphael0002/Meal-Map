@@ -70,6 +70,7 @@ const updateUser = eah(async (req, res) => {
 
 
 const addIngredientToShoppingList = eah(async (req, res) => {
+    console.log(req.body.ingredients);
     const { ingredients} = req.body;
     let ingredientData = [{}];
     ingredients.map((ingredient) => ingredientData.push({name: ingredient.name, quantity: ingredient.quantity}))
@@ -218,7 +219,7 @@ const deletePlanner = async (req, res)=>{
 
 const getUserData = eah(async (req, res) => {
     const id = req.user.id;
-    const user = await User.findById(id);
+    const user = await User.findById(id).select("-password");
     if(user){
         res.status(200).json({
             status:'success',

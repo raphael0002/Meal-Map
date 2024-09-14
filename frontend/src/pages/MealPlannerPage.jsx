@@ -78,7 +78,7 @@ const MealPlannerPage = () => {
 
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Add a Meal Plan</h2>
-        <div className="flex gap-4 mb-4">
+        <div className="flex gap-4 mb-4 max-md:flex-col">
           <select
             value={selectedRecipe}
             onChange={(e) => setSelectedRecipe(e.target.value)}

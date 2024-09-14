@@ -8,7 +8,7 @@ const DeleteBox = ({ showDeleteBox, onSubmit, onClose, recipeId }) => {
   };
   return (
     <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6 relative">
+      <div className="w-full max-w-md bg-[#FFF5E4] shadow-lg rounded-lg p-6 relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-3 cursor-pointer shrink-0 fill-gray-400 hover:fill-red-500 float-right"
@@ -58,7 +58,7 @@ const DeleteBox = ({ showDeleteBox, onSubmit, onClose, recipeId }) => {
           </button>
           <button
             type="button"
-            className="px-4 py-2 rounded-lg text-gray-800 text-sm tracking-wide bg-gray-200 hover:bg-gray-300 active:bg-gray-200"
+            className="px-4 py-2 rounded-lg text-white text-sm tracking-wide bg-blue-500 hover:bg-blue-600 active:bg-gray-200"
             onClick={onClose}
           >
             Cancel

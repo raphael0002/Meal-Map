@@ -74,179 +74,193 @@ const CreateRecipesPage = () => {
   };
 
   return (
-    <div className="flex flex-col bg-[#FFF5E4] p-0 rounded-xl max-md:w-3/4 lg:w-auto">
-      <h1 className="font-semibold text-3xl py-5 px-5">Create Recipe</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-5 px-10">
-          <div className="flex gap-1">
-            <div className="flex flex-col gap-4 ">
-              <div className="flex gap-4 whitespace-nowrap">
-                <label htmlFor="title">Recipe Name</label>
-                <input
-                  type="text"
-                  value={title}
-                  name="recipe-title"
-                  id="title"
-                  className="bg-[#C1D8C3] h-8 w-3/4 rounded-md"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-              <div className="flex gap-3 whitespace-nowrap">
-                <label htmlFor="title">Recipe Image</label>
-                <input
-                  type="text"
-                  value={imgUrl}
-                  name="recipe-image"
-                  id="image-url"
-                  className="bg-[#C1D8C3] h-8 w-3/4 rounded-md"
-                  onChange={(e) => setImgUrl(e.target.value)}
-                />
-              </div>
-              <div className="flex gap-8">
-                <label htmlFor="title">Description</label>
-                <textarea
-                  value={description}
-                  rows={100}
-                  cols={80}
-                  name="recipe-description"
-                  id="description"
-                  className="bg-[#C1D8C3] h-[10rem] w-3/4 rounded-md"
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </div>
-              <div className="flex *:flex ml-[32px] gap-3 w-5/6 *:gap-2 *:whitespace-nowrap">
-                <div>
-                  <label htmlFor="">Prep Time:</label>
-                  <input
-                    value={prepTime}
-                    type="text"
-                    name="prep-timeField"
-                    id="prep-time"
-                    className="bg-[#C1D8C3] h-8 w-full rounded-md"
-                    onChange={(e) => setPrepTime(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="calories">Calories:</label>
-                  <input
-                    type="text"
-                    value={calories}
-                    name="caloriesField"
-                    id="calories"
-                    className="bg-[#C1D8C3] h-8 w-full rounded-md"
-                    onChange={(e) => setCalories(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="category">Category:</label>
-                  <input
-                    type="text"
-                    value={category}
-                    name="categoryField"
-                    id="category"
-                    className="bg-[#C1D8C3] h-8 w-full rounded-md"
-                    onChange={(e) => {
-                      const categories = e.target.value.split(",");
-                      setCategory(categories);
-                    }}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="servable">Servable:</label>
-                  <input
-                    type="text"
-                    value={servable}
-                    name="servableField"
-                    id="servable"
-                    className="bg-[#C1D8C3] h-8 w-full rounded-md"
-                    onChange={(e) => setServable(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="w-[50%] h-auto">
-              <img
-                src={
-                  imgUrl
-                    ? imgUrl
-                    : "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1hR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg"
-                }
-                alt="Recipe Image"
-                className="h-auto w-auto rounded-md bg-[#C1D8C3]"
+    <div className="flex flex-col bg-[#FFF5E4] p-4 rounded-xl w-full max-w-7xl mx-auto">
+      <h1 className="font-semibold text-2xl md:text-3xl py-5 px-5">
+        Create Recipe
+      </h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <div className="flex flex-col lg:flex-row gap-6 px-4">
+          <div className="flex flex-col gap-4 lg:w-2/3">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="title" className="font-semibold">
+                Recipe Name
+              </label>
+              <input
+                type="text"
+                value={title}
+                name="recipe-title"
+                id="title"
+                className="bg-[#C1D8C3] p-2 rounded-md w-full"
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-          </div>
-          <div className="flex justify-evenly items-center gap-4">
-            <div className="flex flex-row items-start gap-4 ml-3 w-full">
-              <div className="flex gap-2 flex-col">
-                <label htmlFor="">Ingredients:</label>
-                {ingredients.map((ingredient, index) => (
-                  <div key={index} className="flex gap-2 w-full *:py-2 *:px-2">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      value={ingredient.name}
-                      className="bg-[#C1D8C3] h-8 w-1/2 rounded-md"
-                      onChange={(e) =>
-                        handleIngredientChange(index, "name", e.target.value)
-                      }
-                    />
-                    <input
-                      type="text"
-                      placeholder="Quantity"
-                      value={ingredient.quantity}
-                      className="bg-[#C1D8C3] h-8 w-1/2 rounded-md"
-                      onChange={(e) =>
-                        handleIngredientChange(
-                          index,
-                          "quantity",
-                          e.target.value
-                        )
-                      }
-                    />
-                  </div>
-                ))}
-                <div className="flex gap-4 ml-[8rem] *:py-2 *:px-6 *:rounded-md *:bg-[#6A9C89] justify-start my-[0.95rem] whitespace-nowrap">
-                  <button
-                    type="button"
-                    className="hover:bg-[#C1D8C3] w-1/2 mt-2"
-                    onClick={handleAddIngredient}
-                  >
-                    Add Ingredient
-                  </button>
-                  <button
-                    type="button"
-                    className="hover:bg-[#C1D8C3] w-1/2 mt-2"
-                    onClick={handleDeleteIngredient}
-                  >
-                    Delete Ingredient
-                  </button>
-                </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="image-url" className="font-semibold">
+                Recipe Image URL
+              </label>
+              <input
+                type="text"
+                value={imgUrl}
+                name="recipe-image"
+                id="image-url"
+                className="bg-[#C1D8C3] p-2 rounded-md w-full"
+                onChange={(e) => setImgUrl(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="description" className="font-semibold">
+                Description
+              </label>
+              <textarea
+                value={description}
+                rows={4}
+                name="recipe-description"
+                id="description"
+                className="bg-[#C1D8C3] p-2 rounded-md w-full"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <label htmlFor="prep-time" className="font-semibold">
+                  Prep Time:
+                </label>
+                <input
+                  value={prepTime}
+                  type="text"
+                  name="prep-timeField"
+                  id="prep-time"
+                  className="bg-[#C1D8C3] p-2 rounded-md w-full"
+                  onChange={(e) => setPrepTime(e.target.value)}
+                />
               </div>
-              <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="instructions">Instructions:</label>
-                <textarea
-                  value={instructions.join("\n")}
-                  cols={85}
-                  rows={100}
-                  name="instructions"
-                  id="instructions"
-                  className="bg-[#C1D8C3] h-96 w-full rounded-md"
+              <div>
+                <label htmlFor="calories" className="font-semibold">
+                  Calories:
+                </label>
+                <input
+                  type="text"
+                  value={calories}
+                  name="caloriesField"
+                  id="calories"
+                  className="bg-[#C1D8C3] p-2 rounded-md w-full"
+                  onChange={(e) => setCalories(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="category" className="font-semibold">
+                  Category:
+                </label>
+                <input
+                  type="text"
+                  value={category}
+                  name="categoryField"
+                  id="category"
+                  className="bg-[#C1D8C3] p-2 rounded-md w-full"
                   onChange={(e) => {
-                    const value = e.target.value.split("\n");
-                    setInstructions(value);
+                    const categories = e.target.value.split(",");
+                    setCategory(categories);
                   }}
                 />
               </div>
+              <div>
+                <label htmlFor="servable" className="font-semibold">
+                  Servable:
+                </label>
+                <input
+                  type="text"
+                  value={servable}
+                  name="servableField"
+                  id="servable"
+                  className="bg-[#C1D8C3] p-2 rounded-md w-full"
+                  onChange={(e) => setServable(e.target.value)}
+                />
+              </div>
             </div>
           </div>
+          <div className="lg:w-1/3 mt-8">
+            <img
+              src={
+                imgUrl ||
+                "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1hR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg"
+              }
+              alt="Recipe Image"
+              className="w-full h-auto rounded-md"
+            />
+          </div>
         </div>
-
-        <div className="flex gap-4 ml-[8rem] *:py-2 *:px-6 *:rounded-md *:bg-[#6A9C89] justify-start my-[0.95rem]">
-          <button type="submit" className="hover:bg-[#C1D8C3]">
+        <div className="flex flex-col md:flex-row gap-4 px-4">
+          <div className="w-full">
+            <label htmlFor="ingredients" className="font-semibold">
+              Ingredients:
+            </label>
+            {ingredients.map((ingredient, index) => (
+              <div key={index} className="flex gap-2 py-2">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={ingredient.name}
+                  className="bg-[#C1D8C3] p-2 rounded-md w-1/2"
+                  onChange={(e) =>
+                    handleIngredientChange(index, "name", e.target.value)
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder="Quantity"
+                  value={ingredient.quantity}
+                  className="bg-[#C1D8C3] p-2 rounded-md w-1/2"
+                  onChange={(e) =>
+                    handleIngredientChange(index, "quantity", e.target.value)
+                  }
+                />
+              </div>
+            ))}
+            <div className="flex gap-4 mt-2">
+              <button
+                type="button"
+                className="bg-[#6A9C89] text-white py-2 px-4 rounded-md hover:bg-[#C1D8C3]"
+                onClick={handleAddIngredient}
+              >
+                Add Ingredient
+              </button>
+              <button
+                type="button"
+                className="bg-[#6A9C89] text-white py-2 px-4 rounded-md hover:bg-[#C1D8C3]"
+                onClick={handleDeleteIngredient}
+              >
+                Delete Ingredient
+              </button>
+            </div>
+          </div>
+          <div className="w-full">
+            <label htmlFor="instructions" className="font-semibold">
+              Instructions:
+            </label>
+            <textarea
+              value={instructions.join("\n")}
+              cols={30}
+              rows={8}
+              name="instructions"
+              id="instructions"
+              className="bg-[#C1D8C3] p-2 rounded-md w-full"
+              onChange={(e) => setInstructions(e.target.value.split("\n"))}
+            />
+          </div>
+        </div>
+        <div className="flex justify-end gap-4 mt-4 px-4">
+          <button
+            type="submit"
+            className="bg-[#6A9C89] text-white py-2 px-6 rounded-md hover:bg-[#C1D8C3]"
+          >
             Add
           </button>
-          <button className="hover:bg-[#C1D8C3]">Delete</button>
+          <button
+            type="button"
+            className="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600"
+          >
+            Delete
+          </button>
         </div>
       </form>
     </div>

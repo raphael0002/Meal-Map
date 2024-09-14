@@ -13,22 +13,35 @@ import { createContext, useContext, useState } from "react";
 // import DarkModeToggler from "./DarkModeToggler";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import SearchBox from "./SearchBox";
 
 const SidebarContext = createContext();
 
-const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
+const Sidebar = ({
+  expanded,
+  setExpanded,
+  searchQuery,
+  setSearchQuery,
+  children,
+}) => {
   const [threeDotFn, setThreeDotFn] = useState(true);
   const { value, makeValue } = useAuth();
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    bio: "",
-    image: "",
-    password: "",
-  });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  // const [user, setUser] = useState({
+  //   username: "",
+  //   email: "",
+  //   bio: "",
+  //   image: "",
+  //   password: "",
+  // });
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+  const handleSearchIconClick = () => {
+    if (!expanded) {
+      setIsSearchOpen(true);
+    }
   };
   return (
     <aside className="h-screen">
@@ -59,6 +72,7 @@ const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
                 ? ""
                 : "relative rounded-lg hover:bg-indigo-200 hover:text-indigo-800 dark:text-white"
             }`}
+            onClick={handleSearchIconClick}
           />
           <input
             type="text"
@@ -75,7 +89,10 @@ const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
         </SidebarContext.Provider>
         {/* <DarkModeToggler expanded={expanded} /> */}
         <div className="border-t flex p-3 text-[#FFF5E4]">
-          <img src={avatar} className="w-10 h-10 rounded-md" />
+          <Link to="/profile">
+            <img src={avatar} className="w-10 h-10 rounded-md" />
+          </Link>
+
           <div
             className={`flex justify-between items-center overflow-hidden transition-all  ${
               expanded ? "w-52 ml-3" : "w-0"
@@ -127,6 +144,13 @@ const Sidebar = ({ expanded, setExpanded, setSearchQuery, children }) => {
           </div>
         </div>
       </nav>
+      {isSearchOpen && (
+        <SearchBox
+          setIsSearchOpen={setIsSearchOpen}
+          setSearchQuery={setSearchQuery}
+          searchQuery={searchQuery}
+        />
+      )}
     </aside>
   );
 };

@@ -22,6 +22,7 @@ const HomePage = ({ searchQuery, setSearchQuery }) => {
           expanded={expanded}
           setExpanded={setExpanded}
           setSearchQuery={setSearchQuery}
+          searchQuery={searchQuery}
         >
           <SidebarItem
             icon={<CookingPot size={20} />}
@@ -64,7 +65,7 @@ const HomePage = ({ searchQuery, setSearchQuery }) => {
       </div>
       <div
         className={`flex-1 p-4 min-h-screen transition-margin duration-300 ${
-          !expanded ? "ml-28" : "ml-[315px]"
+          !expanded ? "ml-24" : "ml-[315px]"
         }`}
       >
         <Outlet />

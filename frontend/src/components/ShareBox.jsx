@@ -1,10 +1,9 @@
-import React from "react";
-
+/* eslint-disable react/prop-types */
 const ShareBox = ({ onClose, show, link }) => {
   if (!show) return null;
   return (
     <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-      <div className="w-full flex flex-col max-w-md bg-white shadow-lg rounded-lg p-6 relative">
+      <div className="w-full flex flex-col max-w-md bg-[#FFF5E4] shadow-lg rounded-lg p-6 relative">
         <div className="flex justify-between">
           <h2 className="text-2xl font-semibold">Share Recipe</h2>
           <svg
@@ -27,7 +26,7 @@ const ShareBox = ({ onClose, show, link }) => {
         <div className="flex justify-center items-center gap-1 mt-8 mb-2">
           <input
             type="text"
-            className=" bg-gray-50 border-2 border-gray-300 text-gray-500 text-sm rounded-md outline-none block w-full p-2.5"
+            className=" bg-[#C1D8C3] border border-[#6A9C89] text-black text-sm rounded-md outline-none block w-full p-2.5"
             readOnly={true}
             value={link}
           />
