@@ -1,1 +1,1 @@
-Meal Map
+Meal Map - Food Manager
